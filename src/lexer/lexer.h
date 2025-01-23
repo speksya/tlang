@@ -1,67 +1,40 @@
 #ifndef LEXER
 #define LEXER
 
+#include <stddef.h>
+#include "../token/token.h"
+
 /**
  * @file lexer.h
  * @brief Lexer module for tokenizing input.
  */
 
 /**
- * @brief Enumeration of token types.
+ * @brief Lexer structure for tokenizing input.
  * 
- * Represents all possible token types, including keywords, types, operators, and grammar symbols.
- */
-typedef enum {
-    TOKEN_KEYWORD,
-    TOKEN_STRING,
-    TOKEN_NUMBER,
-    TOKEN_BOOL,
-    TOKEN_VOID,
-    TOKEN_NIL,
-    TOKEN_AND,
-    TOKEN_NOT,
-    TOKEN_OR,
-    TOKEN_GREATER,
-    TOKEN_LESS,
-    TOKEN_EQUAL,
-    TOKEN_THAN,
-    TOKEN_MULTIPLY,
-    TOKEN_DIVIDE,
-    TOKEN_MODULO,
-    TOKEN_PLUS,
-    TOKEN_MINUS,
-    TOKEN_ASSIGN,
-    TOKEN_QUESTION,
-    TOKEN_LPAREN,
-    TOKEN_RPAREN,
-    TOKEN_LBRACKET,
-    TOKEN_RBRACKET,
-    TOKEN_LBRACE,
-    TOKEN_RBRACE,
-    TOKEN_DOUBLE_QUOTE,
-    TOKEN_SINGLE_QUOTE,
-    TOKEN_SEMICOLON,
-    TOKEN_COLON,
-    TOKEN_DOT,
-    TOKEN_COMMA,
-    TOKEN_EXCLAMATION,
-} TokenType;
-
-/**
- * @brief Represents a token.
- * 
- * Contains the token type and its associated value. 
+ * Holds the input buffer, current character, buffer size, and position.
  */
 typedef struct {
-    TokenType token;
-    char* value;
-} Token;
+    char* buffer;
+    char character;
+    size_t buffer_size;
+    size_t position;
+} Lexer;
 
 /**
- * @brief Initializes the lexer and tokenizes the input buffer.
+ * @brief Initializes a lexer with the input buffer.
+ * 
  * @param buffer Input string to tokenize.
+ * @return Pointer to the initialized Lexer.
+ */
+Lexer* lexer_init(char* buffer);
+
+/**
+ * @brief Tokenizes the input buffer using the lexer.
+ * 
+ * @param lexer Initialized Lexer instance.
  * @return Pointer to the first token in the tokenized list.
  */
-Token* init(const char* buffer);
+Token* lexer_tokenize(Lexer* lexer);
 
 #endif 

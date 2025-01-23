@@ -3,7 +3,7 @@
 #include <string.h>
 #include "io.h"
 
-char* read_file(const char* name) {
+char* io_read(const char* name) {
     FILE* file = fopen(name, "r");
     if (file == NULL) {
         exit(EXIT_FAILURE);

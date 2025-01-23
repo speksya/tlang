@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "io/io.h"
+#include "lexer/lexer.h"
 
 int main(int argc, char** argv) {
     if (argc < 2) {
@@ -9,7 +10,10 @@ int main(int argc, char** argv) {
     }
 
     char* filename = *++argv; 
-    char* buffer = read_file(filename);
-    printf("%s", buffer);
+    char* buffer = io_read(filename);
+
+    Lexer* lexer = lexer_init(buffer);
+    Token* tokens = lexer_tokenize(lexer);
+
     return EXIT_SUCCESS;
 }
