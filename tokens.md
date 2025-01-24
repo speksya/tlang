@@ -9,6 +9,7 @@
 - `while`
 - `for`
 - `foreach`
+- `until`
 - `in`
 - `is`
 - `return`
