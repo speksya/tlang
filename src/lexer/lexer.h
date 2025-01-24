@@ -37,4 +37,18 @@ Lexer* lexer_init(char* buffer);
  */
 Token* lexer_tokenize(Lexer* lexer);
 
+/**
+ * @brief Moves the lexer to the next character in the input buffer.
+ * 
+ * @param lexer Initialized Lexer instance.
+ */
+void lexer_advance(Lexer* lexer);
+
+/**
+ * @brief Skips whitespace characters in the input buffer.
+ * 
+ * @param lexer Initialized Lexer instance.
+ */
+void lexer_skip_whitespace(Lexer* lexer);
+
 #endif 
