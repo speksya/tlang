@@ -1,12 +1,13 @@
 #include <stdlib.h>
-#include <stdio.h>
+
+#include "errors/errors.h"
 #include "io/io.h"
 #include "lexer/lexer.h"
+#include "token/token.h"
 
 int main(int argc, char** argv) {
     if (argc < 2) {
-        printf("%s", "Please specify file name");
-        return EXIT_FAILURE;
+        throw_error(FILE_NOT_SPECIFIED_NAME_ERROR);
     }
 
     char* filename = *++argv; 
@@ -14,6 +15,10 @@ int main(int argc, char** argv) {
 
     Lexer* lexer = lexer_init(buffer);
     Token* tokens = lexer_tokenize(lexer);
+
+    free(buffer);
+    free(lexer);
+    free(tokens);
 
     return EXIT_SUCCESS;
 }

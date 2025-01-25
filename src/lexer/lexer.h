@@ -2,7 +2,8 @@
 #define LEXER
 
 #include <stddef.h>
-#include "../token/token.h"
+
+#include "token/token.h"
 
 /**
  * @file lexer.h
