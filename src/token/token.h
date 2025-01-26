@@ -12,6 +12,9 @@
  * Represents all possible token types, including keywords, types, operators, and grammar symbols.
  */
 typedef enum {
+
+    /* Keywords */
+
     TOKEN_DET,
     TOKEN_CONST,
     TOKEN_FUN,
@@ -29,11 +32,18 @@ typedef enum {
     TOKEN_BREAK,
     TOKEN_DEFAULT,
     TOKEN_THEN,
+    TOKEN_ARRAY,
+
+    /* Types */
+
     TOKEN_STRING,
     TOKEN_NUMBER,
     TOKEN_BOOL,
     TOKEN_VOID,
     TOKEN_NIL,
+
+    /* Logical operators */
+
     TOKEN_AND,
     TOKEN_NOT,
     TOKEN_OR,
@@ -41,6 +51,9 @@ typedef enum {
     TOKEN_LESS,
     TOKEN_EQUAL,
     TOKEN_THAN,
+
+    /* Operators */
+
     TOKEN_MULTIPLY,
     TOKEN_DIVIDE,
     TOKEN_MODULO,
@@ -48,6 +61,9 @@ typedef enum {
     TOKEN_MINUS,
     TOKEN_ASSIGN,
     TOKEN_QUESTION,
+
+    /* Grammar */
+
     TOKEN_LPAREN,
     TOKEN_RPAREN,
     TOKEN_LBRACKET,
