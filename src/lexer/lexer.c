@@ -1,8 +1,10 @@
 #include <ctype.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "errors/errors.h"
+#include "token/token.h"
 
 #include "lexer.h"
 
@@ -41,6 +43,16 @@ Token* lexer_tokenize(Lexer* lexer) {
 
     while(lexer->character != '\0') {
         lexer_skip_whitespace(lexer);
+
+        if (isalpha(lexer->character)) {
+            Token* identifier = lexer_parse_identifier(lexer);
+            // TODO: remove printf
+            printf("%d\t", identifier->token);
+            // TODO: remove printf
+            printf("%s\n", identifier->value);
+        }
+
+        lexer_advance(lexer);
     }
 
     return tokens;

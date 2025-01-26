@@ -46,6 +46,22 @@ Token* lexer_tokenize(Lexer* lexer);
 void lexer_advance(Lexer* lexer);
 
 /**
+ * @brief Returns a token for the given identifier, checking if it is a keyword, type, or logical operator.
+ *
+ * @param identifier String to check.
+ * @return Pointer to the corresponding Token.
+ */
+Token* lexer_get_identifier(const char* identifier);
+
+/**
+ * @brief Parses an identifier from the input buffer and returns its token.
+ *
+ * @param lexer Initialized Lexer instance.
+ * @return Pointer to the parsed Token.
+ */
+Token* lexer_parse_identifier(Lexer* lexer);
+
+/**
  * @brief Skips whitespace characters in the input buffer.
  * 
  * @param lexer Initialized Lexer instance.

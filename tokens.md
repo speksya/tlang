@@ -16,6 +16,7 @@
 - `break`
 - `default`
 - `then`
+- `array`
 
 # Types
 - `string`

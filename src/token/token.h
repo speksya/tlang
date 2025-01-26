@@ -33,6 +33,7 @@ typedef enum {
     TOKEN_DEFAULT,
     TOKEN_THEN,
     TOKEN_ARRAY,
+    TOKEN_IDENTIFIER,
 
     /* Types */
 
@@ -98,5 +99,29 @@ typedef struct {
  * @return Pointer to the newly created Token.
  */
 Token* token_init(int type, const char* value);
+
+/**
+ * @brief Checks if the given value is a keyword and returns the corresponding token.
+ *
+ * @param value String value to check against keyword list.
+ * @return Pointer to the Token if the value is a keyword, otherwise NULL.
+ */
+Token* token_iskeyword(const char* value);
+
+/**
+ * @brief Checks if the given value is a type and returns the corresponding token.
+ *
+ * @param value String value to check against type list.
+ * @return Pointer to the Token if the value is a type, otherwise NULL.
+ */
+Token* token_istype(const char* value);
+
+/**
+ * @brief Checks if the given value is a logical operator and returns the corresponding token.
+ *
+ * @param value String value to check against logical operator list.
+ * @return Pointer to the Token if the value is a logical operator, otherwise NULL.
+ */
+Token* token_islogical(const char* value);
 
 #endif
