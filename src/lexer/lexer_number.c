@@ -20,6 +20,7 @@ Token* lexer_parse_number(Lexer* lexer) {
             number_size *= 2;
             number = realloc(number, number_size);
             if (number == NULL) {
+                free(number);
                 throw_error(REALLOCATION_ERROR);
             }
         }

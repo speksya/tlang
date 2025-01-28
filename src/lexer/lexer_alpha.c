@@ -39,6 +39,7 @@ Token* lexer_parse_identifier(Lexer* lexer) {
             identifier_size *= 2;
             identifier = realloc(identifier, identifier_size);
             if (identifier == NULL) {
+                free(identifier);
                 throw_error(REALLOCATION_ERROR);
             }
         }
