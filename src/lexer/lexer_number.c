@@ -31,5 +31,5 @@ Token* lexer_parse_number(Lexer* lexer) {
 
     number[index] = '\0';
 
-    return token_init(TOKEN_DIGHT, number);
+    return token_init(TOKEN_DIGIT, number);
 }

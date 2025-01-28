@@ -37,7 +37,7 @@ typedef enum {
     /* General */
 
     TOKEN_IDENTIFIER,
-    TOKEN_DIGHT,
+    TOKEN_DIGIT,
 
     /* Types */
 
