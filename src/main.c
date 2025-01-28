@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
         throw_error(FILE_NOT_SPECIFIED_NAME_ERROR);
     }
 
-    char* filename = *++argv; 
+    const char* filename = *++argv; 
     char* buffer = io_read(filename);
 
     Lexer* lexer = lexer_init(buffer);
