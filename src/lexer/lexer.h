@@ -54,6 +54,14 @@ void lexer_advance(Lexer* lexer);
 Token* lexer_get_identifier(const char* identifier);
 
 /**
+ * @brief Returns a token for the given number
+ *
+ * @param number String to check.
+ * @return Pointer to the corresponding Token.
+ */
+Token* lexer_parse_number(Lexer* lexer);
+
+/**
  * @brief Parses an identifier from the input buffer and returns its token.
  *
  * @param lexer Initialized Lexer instance.

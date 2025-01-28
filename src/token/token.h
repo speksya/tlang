@@ -33,7 +33,11 @@ typedef enum {
     TOKEN_DEFAULT,
     TOKEN_THEN,
     TOKEN_ARRAY,
+
+    /* General */
+
     TOKEN_IDENTIFIER,
+    TOKEN_DIGHT,
 
     /* Types */
 
