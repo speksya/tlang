@@ -25,4 +25,11 @@
  */
 void throw_error(char* message);
 
+/**
+ * @brief Prints an error message and unexpected characher and exits the program with a failure status.
+ * 
+ * @param character. The unexpected character.
+ */
+void throw_unexpected_character_error(char character);
+
 #endif

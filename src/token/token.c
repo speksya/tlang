@@ -15,7 +15,7 @@ Token* token_iskeyword(const char* value) {
     return NULL;
 }
 
-Token* token_init(int type, const char* value) {
+Token* token_init(TokenType type, const char* value) {
     Token* token = malloc(sizeof(Token));
     if (token == NULL) {
         throw_error(ALLOCATION_ERROR);

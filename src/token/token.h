@@ -15,6 +15,7 @@ typedef enum {
 
     /* General */
 
+    TOKEN_EOF,
     TOKEN_IDENTIFIER,
     TOKEN_DIGIT,
 
@@ -140,7 +141,7 @@ static Token keywords[] = {
  * @param value String value associated with the token.
  * @return Pointer to the newly created Token.
  */
-Token* token_init(int type, const char* value);
+Token* token_init(TokenType type, const char* value);
 
 /**
  * @brief Checks if the given value is a keyword and returns the corresponding token.

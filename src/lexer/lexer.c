@@ -15,13 +15,24 @@ static void lexer_advance(Lexer* lexer) {
     }
 }
 
+static Token* lexer_advance_token(Lexer* lexer, TokenType type) {
+    char* buffer = malloc(sizeof(char) * 2);
+
+    buffer[0] = lexer->character;
+    buffer[1] = '\0';
+
+    lexer_advance(lexer);
+
+    return token_init(type, buffer);
+}
+
 static void lexer_skip_whitespace(Lexer* lexer) {
-    if (isspace(lexer->character)) {
+    while(lexer->character == 13 || lexer->character == 10 || lexer->character == ' ' || lexer->character == '\t') {
         lexer_advance(lexer);
     }
 }
 
-static Token* lexer_get_identifier(const char* identifier) {
+static Token* lexer_get_alpha(const char* identifier) {
     Token* keyword = token_iskeyword(identifier);
     if (keyword != NULL) {
         return keyword;
@@ -30,7 +41,7 @@ static Token* lexer_get_identifier(const char* identifier) {
     return token_init(TOKEN_IDENTIFIER, identifier);
 }
 
-static Token* lexer_parse_identifier(Lexer* lexer) {
+static Token* lexer_parse_alpha(Lexer* lexer) {
     size_t identifier_size = 1;
     size_t index = 0;
 
@@ -55,10 +66,10 @@ static Token* lexer_parse_identifier(Lexer* lexer) {
 
     identifier[index] = '\0';
 
-    return lexer_get_identifier(identifier);
+    return lexer_get_alpha(identifier);
 }
 
-static Token* lexer_parse_number(Lexer* lexer) {
+static Token* lexer_parse_digit(Lexer* lexer) {
     size_t number_size = 1;
     size_t index = 0;
 
@@ -87,34 +98,65 @@ static Token* lexer_parse_number(Lexer* lexer) {
 }
 
 Token* lexer_tokenize(Lexer* lexer) {
-    Token* tokens = malloc(sizeof(Token));
-    if (tokens == NULL) {
-        throw_error(ALLOCATION_ERROR);
-    }
-
     while(lexer->character != '\0') {
         lexer_skip_whitespace(lexer);
 
         if (isalpha(lexer->character)) {
-            Token* identifier = lexer_parse_identifier(lexer);
-            // TODO: remove printf
-            printf("%d\t", identifier->token);
-            // TODO: remove printf
-            printf("%s\n", identifier->value);
+            return lexer_parse_alpha(lexer);
         }
 
         if (isdigit(lexer->character)) {
-            Token* number = lexer_parse_number(lexer);
-            // TODO: remove printf
-            printf("%d\t", number->token);
-            // TODO: remove printf
-            printf("%s\n", number->value);
+            return lexer_parse_digit(lexer);
         }
 
-        lexer_advance(lexer);
+        switch(lexer->character) {
+            case '+':
+                return lexer_advance_token(lexer, TOKEN_PLUS);
+            case '-':
+                return lexer_advance_token(lexer, TOKEN_MINUS);
+            case '*':
+                return lexer_advance_token(lexer, TOKEN_MULTIPLY);
+            case '/':
+                return lexer_advance_token(lexer, TOKEN_DIVIDE);
+            case '=':
+                return lexer_advance_token(lexer, TOKEN_ASSIGN);
+            case '?':
+                return lexer_advance_token(lexer, TOKEN_QUESTION);
+            case '(':
+                return lexer_advance_token(lexer, TOKEN_LPAREN);
+            case ')':
+                return lexer_advance_token(lexer, TOKEN_RPAREN);
+            case '{':
+                return lexer_advance_token(lexer, TOKEN_LBRACE);
+            case '}':
+                return lexer_advance_token(lexer, TOKEN_RBRACE);
+            case '[':
+                return lexer_advance_token(lexer, TOKEN_LBRACKET);
+            case ']':
+                return lexer_advance_token(lexer, TOKEN_RBRACKET);
+            case '"':
+                return lexer_advance_token(lexer, TOKEN_DOUBLE_QUOTE);
+            case '\'':
+                return lexer_advance_token(lexer, TOKEN_SINGLE_QUOTE);
+            case ';':
+                return lexer_advance_token(lexer, TOKEN_SEMICOLON);
+            case ':':
+                return lexer_advance_token(lexer, TOKEN_COLON);
+            case '.':
+                return lexer_advance_token(lexer, TOKEN_DOT);
+            case ',':
+                return lexer_advance_token(lexer, TOKEN_COMMA);
+            case '!':
+                return lexer_advance_token(lexer, TOKEN_EXCLAMATION);
+            case '\0':
+                break;
+            default:
+                throw_unexpected_character_error(lexer->character);
+                break;
+        }
     }
 
-    return tokens;
+    return token_init(TOKEN_EOF, "EOF");
 }
 
 Lexer* lexer_init(char* buffer) {

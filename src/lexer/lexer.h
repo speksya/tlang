@@ -46,6 +46,15 @@ Token* lexer_tokenize(Lexer* lexer);
 static void lexer_advance(Lexer* lexer);
 
 /**
+ * @brief Moves the lexer to the next character in the input buffer.
+ *
+ * @param lexer Initialized Lexer instance.
+ * @param type Token type.
+ * @return Pointer to the corresponding Token.
+ */
+static Token* lexer_advance_token(Lexer* lexer, TokenType type);
+
+/**
  * @brief Skips whitespace characters in the input buffer.
  *
  * @param lexer Initialized Lexer instance.
@@ -58,7 +67,7 @@ static void lexer_skip_whitespace(Lexer* lexer);
  * @param identifier String to check.
  * @return Pointer to the corresponding Token.
  */
-static Token* lexer_get_identifier(const char* identifier);
+static Token* lexer_get_alpha(const char* identifier);
 
 /**
  * @brief Parses an identifier from the input buffer and returns its token.
@@ -66,14 +75,22 @@ static Token* lexer_get_identifier(const char* identifier);
  * @param lexer Initialized Lexer instance.
  * @return Pointer to the parsed Token.
  */
-static Token* lexer_parse_identifier(Lexer* lexer);
+static Token* lexer_parse_alpha(Lexer* lexer);
 
 /**
  * @brief Returns a token for the given number
  *
- * @param number String to check.
+ * @param lexer Initialized Lexer instance.
  * @return Pointer to the corresponding Token.
  */
-static Token* lexer_parse_number(Lexer* lexer);
+static Token* lexer_parse_digit(Lexer* lexer);
+
+/**
+ * @brief Returns a token for the given grammar 
+ *
+ * @param lexer Initialized Lexer instance.
+ * @return Pointer to the corresponding Token.
+ */
+static Token* lexer_parse_grammar(Lexer* lexer);
 
 #endif 
