@@ -27,7 +27,7 @@ static Token* lexer_advance_token(Lexer* lexer, TokenType type) {
 }
 
 static void lexer_skip_whitespace(Lexer* lexer) {
-    while(lexer->character == 13 || lexer->character == 10 || lexer->character == ' ' || lexer->character == '\t') {
+    while(isspace(lexer->character)) {
         lexer_advance(lexer);
     }
 }
