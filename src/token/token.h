@@ -8,10 +8,15 @@
 
 /**
  * @brief Enumeration of token types.
- * 
+ *
  * Represents all possible token types, including keywords, types, operators, and grammar symbols.
  */
 typedef enum {
+
+    /* General */
+
+    TOKEN_IDENTIFIER,
+    TOKEN_DIGIT,
 
     /* Keywords */
 
@@ -33,11 +38,6 @@ typedef enum {
     TOKEN_DEFAULT,
     TOKEN_THEN,
     TOKEN_ARRAY,
-
-    /* General */
-
-    TOKEN_IDENTIFIER,
-    TOKEN_DIGIT,
 
     /* Types */
 
@@ -87,7 +87,7 @@ typedef enum {
 
 /**
  * @brief Represents a token.
- * 
+ *
  * Contains the token type and its associated value. 
  */
 typedef struct {
@@ -96,8 +96,46 @@ typedef struct {
 } Token;
 
 /**
+ * @brief Array of keywords.
+ *
+ * Represents all possible keywords, including types, logical operators.
+ */
+static Token keywords[] = {
+    TOKEN_DET, "det",
+    TOKEN_CONST, "const",
+    TOKEN_FUN, "fun",
+    TOKEN_IF, "if",
+    TOKEN_ELSE, "else",
+    TOKEN_MATCH, "match",
+    TOKEN_DO, "do",
+    TOKEN_WHILE, "while",
+    TOKEN_FOR, "for",
+    TOKEN_FOREACH, "foreach",
+    TOKEN_UNTIL, "until",
+    TOKEN_IN, "in",
+    TOKEN_IS, "is",
+    TOKEN_RETURN, "return",
+    TOKEN_BREAK, "break",
+    TOKEN_DEFAULT, "default",
+    TOKEN_THEN, "then",
+    TOKEN_ARRAY, "array",
+    TOKEN_STRING, "string",
+    TOKEN_NUMBER, "number",
+    TOKEN_BOOL, "bool",
+    TOKEN_VOID, "void",
+    TOKEN_NIL, "nil",
+    TOKEN_AND, "and",
+    TOKEN_NOT, "not",
+    TOKEN_OR, "or",
+    TOKEN_GREATER, "greater",
+    TOKEN_LESS, "less",
+    TOKEN_EQUAL, "equal",
+    TOKEN_THAN, "than",
+};
+
+/**
  * @brief Creates a token with the given type and value.
- * 
+ *
  * @param type Token type from TokenType enum.
  * @param value String value associated with the token.
  * @return Pointer to the newly created Token.
@@ -111,21 +149,5 @@ Token* token_init(int type, const char* value);
  * @return Pointer to the Token if the value is a keyword, otherwise NULL.
  */
 Token* token_iskeyword(const char* value);
-
-/**
- * @brief Checks if the given value is a type and returns the corresponding token.
- *
- * @param value String value to check against type list.
- * @return Pointer to the Token if the value is a type, otherwise NULL.
- */
-Token* token_istype(const char* value);
-
-/**
- * @brief Checks if the given value is a logical operator and returns the corresponding token.
- *
- * @param value String value to check against logical operator list.
- * @return Pointer to the Token if the value is a logical operator, otherwise NULL.
- */
-Token* token_islogical(const char* value);
 
 #endif
