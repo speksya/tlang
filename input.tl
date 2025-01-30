@@ -1,8 +1,8 @@
-fun main(): number {
-    det sum: number = 0;
+numebr fun main() {
+    number det sum = 0;
 
-    for(det i: number = 0 until 100; i += 1) {
-        sum = sum + i;
+    for(number det i = 0 until 100 -> i++) {
+        sum += i;
     }
 
     return sum;

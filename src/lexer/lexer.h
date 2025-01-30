@@ -46,13 +46,32 @@ Token* lexer_tokenize(Lexer* lexer);
 static void lexer_advance(Lexer* lexer);
 
 /**
+ * @brief Advances the lexer by a specified offset and returns the character at that position.
+ *
+ * @param lexer Initialized Lexer instance.
+ * @param offset Number of positions to advance.
+ * @return Character at the offset position.
+ */
+static char lexer_advance_offset(const Lexer* lexer, const size_t offset);
+
+/**
  * @brief Moves the lexer to the next character in the input buffer.
  *
  * @param lexer Initialized Lexer instance.
  * @param type Token type.
  * @return Pointer to the corresponding Token.
  */
-static Token* lexer_advance_token(Lexer* lexer, TokenType type);
+static Token* lexer_advance_token(Lexer* lexer, const TokenType type);
+
+/**
+ * @brief Advances the lexer and returns a token with the specified type and value.
+ *
+ * @param lexer Initialized Lexer instance.
+ * @param type Token type.
+ * @param value String value of the token.
+ * @return Pointer to the corresponding Token.
+ */
+static Token* lexer_advance_string_token(Lexer* lexer, const TokenType type, const char* value);
 
 /**
  * @brief Skips whitespace characters in the input buffer.
@@ -86,11 +105,30 @@ static Token* lexer_parse_alpha(Lexer* lexer);
 static Token* lexer_parse_digit(Lexer* lexer);
 
 /**
- * @brief Returns a token for the given grammar 
+ * @brief Parses a plus sign and returns the corresponding token (e.g., '+', '++', '+=').
  *
  * @param lexer Initialized Lexer instance.
  * @return Pointer to the corresponding Token.
  */
-static Token* lexer_parse_grammar(Lexer* lexer);
+static Token* lexer_parse_plus(Lexer* lexer);
+
+/**
+ * @brief Parses a minus sign and returns the corresponding token (e.g., '-', '--', '-=', '->').
+ *
+ * @param lexer Initialized Lexer instance.
+ * @return Pointer to the corresponding Token.
+ */
+static Token* lexer_parse_minus(Lexer* lexer);
+
+/**
+ * @brief Parses an assignment operator and returns the corresponding token (e.g., '=', '+=', '-=', '*=', '/=', '%=').
+ *
+ * @param lexer Initialized Lexer instance.
+ * @param assignType Token type for the assignment operator.
+ * @param type Token type for the base operator.
+ * @param value String value of the token.
+ * @return Pointer to the corresponding Token.
+ */
+static Token* lexer_parse_assign(Lexer* lexer, const TokenType assignType, const TokenType type, const char* value);
 
 #endif 

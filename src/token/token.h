@@ -67,6 +67,14 @@ typedef enum {
     TOKEN_MINUS,
     TOKEN_ASSIGN,
     TOKEN_QUESTION,
+    TOKEN_LAMBDA,
+    TOKEN_MULTIPLY_ASSIGN,
+    TOKEN_DIVIDE_ASSIGN,
+    TOKEN_MODULO_ASSIGN,
+    TOKEN_PLUS_ASSIGN,
+    TOKEN_MINUS_ASSIGN,
+    TOKEN_INCREMENT,
+    TOKEN_DECREMENT,
 
     /* Grammar */
 
@@ -141,7 +149,7 @@ static Token keywords[] = {
  * @param value String value associated with the token.
  * @return Pointer to the newly created Token.
  */
-Token* token_init(TokenType type, const char* value);
+Token* token_init(const TokenType type, const char* value);
 
 /**
  * @brief Checks if the given value is a keyword and returns the corresponding token.

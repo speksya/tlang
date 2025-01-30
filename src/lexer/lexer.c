@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -15,7 +16,20 @@ static void lexer_advance(Lexer* lexer) {
     }
 }
 
-static Token* lexer_advance_token(Lexer* lexer, TokenType type) {
+static char lexer_advance_offset(const Lexer* lexer, const size_t offset) {
+    size_t offset_position = lexer->position + offset;
+    size_t position;
+
+    if (offset_position < lexer->buffer_size) {
+        position = offset_position; 
+    } else {
+        position = lexer->buffer_size;
+    }
+
+    return lexer->buffer[position];
+}
+
+static Token* lexer_advance_token(Lexer* lexer, const TokenType type) {
     char* buffer = malloc(sizeof(char) * 2);
 
     buffer[0] = lexer->character;
@@ -24,6 +38,11 @@ static Token* lexer_advance_token(Lexer* lexer, TokenType type) {
     lexer_advance(lexer);
 
     return token_init(type, buffer);
+}
+
+static Token* lexer_advance_string_token(Lexer* lexer, const TokenType type, const char* value) {
+    lexer_advance(lexer);
+    return token_init(type, value);
 }
 
 static void lexer_skip_whitespace(Lexer* lexer) {
@@ -97,6 +116,55 @@ static Token* lexer_parse_digit(Lexer* lexer) {
     return token_init(TOKEN_DIGIT, number);
 }
 
+static Token* lexer_parse_plus(Lexer* lexer) {
+    const char offset_char = lexer_advance_offset(lexer, 1);
+
+    switch(offset_char) {
+        case '+':
+            lexer_advance(lexer);
+            return lexer_advance_string_token(lexer, TOKEN_INCREMENT, "++");
+        case '=':
+            lexer_advance(lexer);
+            return lexer_advance_string_token(lexer, TOKEN_PLUS_ASSIGN, "+=");
+        default:
+            return token_init(TOKEN_PLUS, "+");
+    }
+}
+
+static Token* lexer_parse_minus(Lexer* lexer) {
+    const char offset_char = lexer_advance_offset(lexer, 1);
+
+    switch(offset_char) {
+        case '-':
+            lexer_advance(lexer);
+            return lexer_advance_string_token(lexer, TOKEN_DECREMENT, "--");
+        case '=':
+            lexer_advance(lexer);
+            return lexer_advance_string_token(lexer, TOKEN_MINUS_ASSIGN, "-=");
+        case '>':
+            lexer_advance(lexer);
+            return lexer_advance_string_token(lexer, TOKEN_LAMBDA, "->");
+        default:
+            return token_init(TOKEN_MINUS, "-");
+    }
+}
+
+static Token* lexer_parse_assign(
+    Lexer* lexer, 
+    const TokenType assignType, 
+    const TokenType type,
+    const char* value
+) {
+    const char offset_char = lexer_advance_offset(lexer, 1);
+
+    if (offset_char == '=') {
+        lexer_advance(lexer);
+        return lexer_advance_string_token(lexer, assignType, value);
+    }
+
+    return lexer_advance_token(lexer, type);
+}
+
 Token* lexer_tokenize(Lexer* lexer) {
     while(lexer->character != '\0') {
         lexer_skip_whitespace(lexer);
@@ -111,13 +179,15 @@ Token* lexer_tokenize(Lexer* lexer) {
 
         switch(lexer->character) {
             case '+':
-                return lexer_advance_token(lexer, TOKEN_PLUS);
+                return lexer_parse_plus(lexer);
             case '-':
-                return lexer_advance_token(lexer, TOKEN_MINUS);
+                return lexer_parse_minus(lexer);
             case '*':
-                return lexer_advance_token(lexer, TOKEN_MULTIPLY);
+                return lexer_parse_assign(lexer, TOKEN_MULTIPLY_ASSIGN, TOKEN_MULTIPLY, "*=");
             case '/':
-                return lexer_advance_token(lexer, TOKEN_DIVIDE);
+                return lexer_parse_assign(lexer, TOKEN_DIVIDE_ASSIGN, TOKEN_DIVIDE, "/=");
+            case '%':
+                return lexer_parse_assign(lexer, TOKEN_MODULO_ASSIGN, TOKEN_MODULO, "%=");
             case '=':
                 return lexer_advance_token(lexer, TOKEN_ASSIGN);
             case '?':
