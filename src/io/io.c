@@ -22,7 +22,7 @@ char* io_read(const char* name) {
     size_t length = 0;
     ssize_t line;
 
-    while ((line = getline(&lineptr, &length, file)) != -1) {
+    while ((line = getline(&lineptr, &length, file)) != EOF) {
         buffer = realloc(buffer, strlen(buffer) + line);
         if (buffer == NULL) {
             fclose(file);
